@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './world-time.scss';
-export interface WorldTimeProps {
-  datetime: Date;
+
+interface WorldTimeProps {
   timezone: string;
 }
 
-const WorldTime = ({ datetime, timezone }: WorldTimeProps) => {
+const WorldTime = ({ timezone }: WorldTimeProps) => {
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timerID = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timerID);
+  }, [currentTime]);
+
   return (
     <div className='world-time-container'>
-      <h1>{timezone}</h1>
-      <p>
-        {new Date(datetime).toLocaleTimeString('en', {
-          timeStyle: 'medium',
-          hour12: false,
-          timeZone: timezone,
-        })}
-      </p>
+      <h4>{timezone}</h4>
+      <time>{currentTime.toLocaleTimeString('en', { timeStyle: 'medium', hour12: false, timeZone: timezone })}</time>
     </div>
   );
 };

@@ -1,30 +1,34 @@
-import React from 'react';
+import { Flight } from '../../App';
 import './flights-list.scss';
 
-const FlightsList = ({ flights }: { flights: any[] }) => {
-  console.log(flights);
+const FlightsList: React.FC<any> = ({ flights }) => {
   if (!flights) return <div>loading</div>;
   return (
     <div className='flights-container'>
-      {flights.map((flight, i) => {
-        return (
+      <ul className='flights-list' style={{ fontWeight: 'bold', fontSize: '20px' }}>
+        <li>Flight Number</li>
+        <li>Scheduled Time</li>
+        <li>Actual Time</li>
+        <li>Gate</li>
+      </ul>
+      {flights
+        .sort((a: Flight, b: Flight) => a.actualTime.localeCompare(b.actualTime))
+        .map(({ flightNumber, scheduledTime, actualTime, gate }: Flight, i: number) => (
           <ul key={i} className='flights-list'>
-            <li>{`From ${flight.departure.airport} To ${flight.arrival.airport}`}</li>
-
-            <li>{`Departure time: ${new Date(flight.departure.scheduled).toLocaleTimeString('en', {
-              timeStyle: 'medium',
-              hour12: false,
-              timeZone: 'UTC',
-            })}`}</li>
-            <li>{`Arrival time: ${new Date(flight.arrival.scheduled).toLocaleTimeString('en', {
-              timeStyle: 'medium',
-              hour12: false,
-              timeZone: 'UTC',
-            })}`}</li>
-            <li>{`Terminal: ${flight.departure.terminal} Gate: ${flight.departure.gate}`}</li>
+            <li>
+              Flight: <b>{flightNumber}</b>
+            </li>
+            <li>
+              Scheduled Time: <b>{scheduledTime}</b>
+            </li>
+            <li>
+              Actual Time: <b>{actualTime}</b>
+            </li>
+            <li>
+              Gate: <b>{gate}</b>
+            </li>
           </ul>
-        );
-      })}
+        ))}
     </div>
   );
 };

@@ -5,9 +5,10 @@
   gap: 10px;
   width: 100%;
   &:nth-child(3) {
-    h1,
-    p {
+    h4,
+    time {
       transform: scale(1.5);
+      font-weight: bold;
     }
   }
 }
