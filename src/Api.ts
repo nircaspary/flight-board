@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+const BASE_URL = 'http://localhost:3000';
+
 // Flights
-export const flightsFetcher = () => async () => {
-  await axios.get('http://api.aviationstack.com/v1/flights', {
-    params: { access_key: '3fb3e6536bb5fe56a2f52a8154eaf5a1', limit: '20', flight_status: 'scheduled' },
-  });
+export const fetchFlights = async (type: string) => {
+  const { data } = await axios.get(`${BASE_URL}/${type}`);
+  if (data) return data;
 };

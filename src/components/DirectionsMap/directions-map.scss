@@ -1,0 +1,12 @@
+.directions-map {
+  width: 100%;
+  z-index: 1;
+  position: fixed;
+  height: 0%;
+  bottom: 0;
+  background-color: white;
+  &.active {
+    transition: all 0.3s ease-in-out;
+    height: 33%;
+  }
+}

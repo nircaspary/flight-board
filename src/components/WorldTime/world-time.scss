@@ -3,11 +3,12 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  font-size: 20rem;
   width: 100%;
   &:nth-child(3) {
-    h4,
+    h3,
     time {
-      transform: scale(1.5);
+      transform: scale(1.3);
       font-weight: bold;
     }
   }
