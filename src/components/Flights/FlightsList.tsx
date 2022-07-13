@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom';
 import { useStore } from '../../stores';
 import { DirectionsMap, FlightRow } from '../';
-import { fetchFlights } from '../../Api';
+import { useFetch } from '../../hooks/useFetch';
 
 export interface Flight {
   flightNumber: string;
@@ -17,7 +16,8 @@ export interface Flight {
 const FlightsList = () => {
   const { app } = useStore();
   const pathname = useLocation().pathname.split('/')[1];
-  const { data, isLoading } = useQuery(['flights', pathname], fetchFlights(pathname), { staleTime: 600_000 });
+  // UseFetch With Caching Custom Hook
+  const { data, isFetching } = useFetch(pathname, { staleTime: 600_000 });
 
   const timeStr = new Date().toLocaleTimeString('en', { timeStyle: 'short', hour12: false });
   const [currentTimeShort, setCurrentTimeShort] = useState(timeStr);
@@ -31,10 +31,11 @@ const FlightsList = () => {
     return () => reactionId();
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isFetching) return <div>Loading...</div>;
   return (
     <>
       {data
+        .slice()
         .sort((a: Flight, b: Flight): number => {
           return a[app.sortBy as keyof Flight].localeCompare(b[app.sortBy as keyof Flight]);
         })
