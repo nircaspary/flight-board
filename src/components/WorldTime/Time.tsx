@@ -11,7 +11,7 @@ const Time = ({ timezone }: WorldTimeProps) => {
     return () => clearInterval(timerID);
   }, [app.currentTime, app]);
   return (
-    <div>{app.currentTime.toLocaleTimeString('en', { timeStyle: 'medium', hour12: false, timeZone: timezone })}</div>
+    <time>{app.currentTime.toLocaleTimeString('en', { timeStyle: 'medium', hour12: false, timeZone: timezone })}</time>
   );
 };
 
