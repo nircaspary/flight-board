@@ -9,7 +9,7 @@ const Time = ({ timezone }: WorldTimeProps) => {
   useEffect(() => {
     const timerID = setInterval(() => app.setCurrentTime(new Date()), 1000);
     return () => clearInterval(timerID);
-  }, [app.currentTime, app]);
+  }, []);
   return (
     <time>{app.currentTime.toLocaleTimeString('en', { timeStyle: 'medium', hour12: false, timeZone: timezone })}</time>
   );
