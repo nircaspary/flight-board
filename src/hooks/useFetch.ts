@@ -24,7 +24,7 @@ export const useFetch = (URL: string, options: UseFetchOptions) => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       setIsFetching(true);
 
       if (app.cache[URL]) {
@@ -36,9 +36,7 @@ export const useFetch = (URL: string, options: UseFetchOptions) => {
         setData(data);
         setIsFetching(false);
       }
-    };
-
-    fetchData();
+    })();
   }, [URL]);
 
   return { isFetching, data };
